@@ -10,15 +10,15 @@ window.dnd = (function () {
 	var dndCount = 0;
 
 	//----------------------------------------------------------------------------DND library constructor
-    function DND (els) {
-        for(var i = 0; i < els.length; i++ ) {
-            this[i] = els[i];
-        }
-        this.length = els.length;
-    };
+  function DND(els) {
+    for(var i = 0; i < els.length; i++ ) {
+      this[i] = els[i];
+    }
+    this.length = els.length;
+  };
 
 	//----------------------------------------------------------------------------Calls callback to all selected elements
-	DND.prototype.map = function (callback) {
+	DND.prototype.map = function(callback) {
 		var results = [], i = 0;
 		for ( ; i < this.length; i++) {
 			results.push(callback.call(this, this[i], i));
@@ -36,27 +36,28 @@ window.dnd = (function () {
 		params = params || {};
 		return this.map(function(el){
 			configs[dndCount] = {
-				onStart: 			(typeof(params.onStart) !== 'undefined') ? params.onStart : null,
-				onDrag: 			(typeof(params.onDrag) !== 'undefined') ? params.onDrag : null,
-				onDrop: 			(typeof(params.onDrop) !== 'undefined') ? params.onDrop : null,
-				parent: 			(typeof(params.parent) !== 'undefined') ? params.parent : document.body,
-				centralize: 		(typeof(params.centralize) !== 'undefined') ? params.centralize : false,
-				clone: 				(typeof(params.clone) !== 'undefined') ? params.clone : false,
-				revert: 			(typeof(params.revert) !== 'undefined') ? params.revert : -1,
+				onStart: 					(typeof(params.onStart) !== 'undefined') ? params.onStart : null,
+				onDrag: 					(typeof(params.onDrag) !== 'undefined') ? params.onDrag : null,
+				onDrop: 					(typeof(params.onDrop) !== 'undefined') ? params.onDrop : null,
+				parent: 					(typeof(params.parent) !== 'undefined') ? params.parent : document.body,
+				centralize: 			(typeof(params.centralize) !== 'undefined') ? params.centralize : false,
+				clone: 						(typeof(params.clone) !== 'undefined') ? params.clone : false,
+				revert: 					(typeof(params.revert) !== 'undefined') ? params.revert : -1,
 				originalElement:	el,
 				originalCoords: 	{ },
-				grabPoint: 			{ },
-				dragElement: 		null,
-				dropTarget: 		null
+				grabPoint: 				{ },
+				dragElement: 			null,
+				dropTarget: 			null
 			};
 
 			if(params.onCreate) params.onCreate();
 
-			el.setAttribute('data-drag-id', dndCount);
-			var list = el.getElementsByTagName('*');
-			for (var i = 0; i < list.length; i++){
-				list[i].setAttribute('data-drag-child', true);
+			var children = el.getElementsByTagName('*');
+			for (var i = 0; i < children.length; i++){
+				children[i].setAttribute('data-drag-child', true);
 			}
+			
+			el.setAttribute('data-drag-id', dndCount);
 			el.addEventListener('mousedown', (params.clone) ? CreateClone : Grab);
 			document.body.addEventListener('touchstart', CheckTouchTarget);
 			document.body.addEventListener('touchend', Drop);
@@ -327,7 +328,7 @@ window.dnd = (function () {
 	}
 
 	//----------------------------------------------------------------------------Library object
-    var dnd = {
+  var dnd = {
 		get: function (selector) {
 			var els;
 			if (typeof selector === 'string') els = document.querySelectorAll(selector);
@@ -355,5 +356,5 @@ window.dnd = (function () {
 			return (tr == 'none') ? 1 : parseFloat(tr.split('(')[1].split(',')[0]);
 		}
 	};
-    return dnd;
+  return dnd;
 }());

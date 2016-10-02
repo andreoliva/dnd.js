@@ -3,9 +3,8 @@
 	<!-- Version: 1.0 -->
 	<head>
 		<meta charset="utf-8" />
-		<title>DND TEST</title>		
-		<link rel='stylesheet' href='reset.css' />
-		<script src='../dnd.js'></script>
+		<title>DND TEST</title>
+		<script src='../dnd.min.js'></script>
 		<style>
 			#MAIN {
 				position: absolute;
@@ -65,11 +64,7 @@
 			dnd.get('.drag-starters').initDraggable({
 				clone: true,
 				centralize: true,
-				revert: 500,
-				onCreate: function(){},
-				onStart: function(evt){},
-				onDrag: function(evt){},
-				onDrop: function(evt){}
+				revert: 500
 			});
 		</script>
 	</body>
